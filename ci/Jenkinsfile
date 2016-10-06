@@ -7,6 +7,9 @@ node {
     def originalV = version();
     def major = originalV[0];
     def minor = originalV[1];
+    echo "major ${major}"
+    echo "minor ${minor}"
+    echo "build ${minor}"
     def v = "${major}.${minor}-${env.BUILD_NUMBER}"
     if (v) {
         echo "Building version ${v}"
