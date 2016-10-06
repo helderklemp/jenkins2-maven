@@ -3,7 +3,20 @@ stage name: 'build', concurrency: 1
 node {
     //mvn "clean install -DskipTests"
 
-    echo "Current project version " + $ { POM_VERSION }
+    // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
+    def originalV = version();
+    def major = originalV[0];
+    def minor = originalV[1];
+    def v = "${major}.${minor}-${env.BUILD_NUMBER}"
+    if (v) {
+        echo "Building version ${v}"
+    }
+}
+
+
+def version() {
+    def matcher = readFile('pom.xml') =~ '<version>(.+)-.*</version>'
+    matcher ? matcher[0][1].tokenize(".") : null
 }
 
 /*stage name: 'test', concurrency: 3
