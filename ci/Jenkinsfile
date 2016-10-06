@@ -10,6 +10,7 @@ node {
 stage name: 'test', concurrency: 3
 
 node {
+    def mvnHome = tool 'm3'
     sh "${mvnHome}/bin/mvn -B test"
 }
 
