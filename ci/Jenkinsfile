@@ -1,17 +1,13 @@
 stage name: 'build', concurrency: 1
 
 node {
-    def mvnHome = tool 'm3'
-    sh "${mvnHome}/bin/mvn -B clean install -DskipTests"
+    mvn "clean install -DskipTests"
 }
-
-
 
 stage name: 'test', concurrency: 3
 
 node {
-    def mvnHome = tool 'm3'
-    sh "${mvnHome}/bin/mvn -B test"
+    mvn "-B test"
 }
 
 stage 'approve'
@@ -20,7 +16,11 @@ timeout(time: 1, unit: 'DAYS') {
 }
 stage name: 'deploy', concurrency: 1
 node {
-    def mvnHome = tool 'm3'
-    sh "${mvnHome}/bin/mvn deploy"
+    mvn "install"
+}
+
+
+def mvn(args) {
+    sh "${tool 'm3'}/bin/mvn ${args}"
 }
 
