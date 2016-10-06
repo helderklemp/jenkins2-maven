@@ -1,7 +1,8 @@
 stage name: 'build', concurrency: 1
 
 
-sh 'mvn clean install'
+def mvnHome = tool 'M3'
+sh "${mvnHome}/bin/mvn -B verify"
 
 
 stage name: 'test', concurrency: 3
