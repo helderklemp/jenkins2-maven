@@ -5,7 +5,7 @@
 
 	<groupId>au.com.icm-consulting</groupId>
 	<artifactId>jenkins2-maven</artifactId>
-	<version>3.22.02</version>
+	<version>3.22.03</version>
 	<packaging>jar</packaging>
 
 	<name>jenkins2-maven</name>
