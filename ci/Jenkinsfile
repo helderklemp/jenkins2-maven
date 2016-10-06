@@ -7,10 +7,11 @@ node {
     def originalV = version();
     def major = originalV[0];
     def minor = originalV[1];
+    def patch = originalV[2];
     echo "initial version ${originalV}"
     echo "major ${major}"
     echo "minor ${minor}"
-    echo "build ${minor}"
+    echo "build ${patch}"
     def v = "${major}.${minor}-${env.BUILD_NUMBER}"
     if (v) {
         echo "Building version ${v}"
@@ -20,7 +21,7 @@ node {
 
 def version() {
     def matcher = readFile('pom.xml') =~ '<version>(.+)-.*</version>'
-    matcher ? matcher[0][1].tokenize(".") : null
+    matcher ? matcher[0][1][2].tokenize(".") : null
 }
 
 /*stage name: 'test', concurrency: 3
