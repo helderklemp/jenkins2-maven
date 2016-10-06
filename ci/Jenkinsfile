@@ -1,8 +1,10 @@
 stage name: 'build', concurrency: 1
 
+node {
+    def mvnHome = tool 'M3'
+    sh "${mvnHome}/bin/mvn -B verify"
+}
 
-def mvnHome = tool 'M3'
-sh "${mvnHome}/bin/mvn -B verify"
 
 
 stage name: 'test', concurrency: 3
