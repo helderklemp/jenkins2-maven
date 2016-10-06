@@ -1,4 +1,9 @@
-stage 'build'
+stage name: 'build', concurrency: 1
+
+sh 'cd .. '
+
+sh 'mvn clean install'
+
 
 stage name: 'test', concurrency: 3
 
