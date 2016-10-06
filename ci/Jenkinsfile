@@ -7,6 +7,7 @@ node {
     def originalV = version();
     def major = originalV[0];
     def minor = originalV[1];
+    echo "initial version ${originalV}"
     echo "major ${major}"
     echo "minor ${minor}"
     echo "build ${minor}"
