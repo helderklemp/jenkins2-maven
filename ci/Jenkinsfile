@@ -16,15 +16,7 @@ timeout(time: 1, unit: 'DAYS') {
 }
 stage name: 'deploy', concurrency: 1
 node {
-    docker.image('maven:3.3.3-jdk-8').inside {
-        // get the codez
-        stage 'Checkout'
-        git url: 'https://github.com/helderklemp/jenkins2-maven.git'
-        stage 'Build'
-        // Run the build
-        sh "./mvnw clean install"
-    }
-
+    mvn "install"
 }
 
 
