@@ -2,12 +2,16 @@ stage name: 'build', concurrency: 1
 
 node {
     def mvnHome = tool 'm3'
-    sh "${mvnHome}/bin/mvn -B verify"
+    sh "${mvnHome}/bin/mvn -B clean install -DskipTests"
 }
 
 
 
 stage name: 'test', concurrency: 3
+
+node {
+    sh "${mvnHome}/bin/mvn -B test"
+}
 
 
 stage name: 'deploy', concurrency: 1
