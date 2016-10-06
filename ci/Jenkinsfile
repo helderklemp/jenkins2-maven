@@ -21,6 +21,6 @@ timeout(time: 1, unit: 'DAYS') {
 stage name: 'deploy', concurrency: 1
 node {
     def mvnHome = tool 'm3'
-    sh "mvn deploy"
+    sh "${mvnHome}/bin/mvn mvn deploy"
 }
 
