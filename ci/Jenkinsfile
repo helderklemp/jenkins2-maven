@@ -2,8 +2,8 @@ stage name: 'build', concurrency: 1
 
 node {
     //mvn "clean install -DskipTests"
-    pom = readMavenPom file: 'pom.xml'
-    echo "Current project version " + pom.version
+
+    echo "Current project version " + $ { POM_VERSION }
 }
 
 /*stage name: 'test', concurrency: 3
