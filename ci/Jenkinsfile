@@ -1,7 +1,8 @@
 stage name: 'build', concurrency: 1
 
 node {
-    mvn "clean install -DskipTests"
+    mvn "mvn versions:set -DnewVersion=3.22.01 "
+    mvn "mvn versions:commit"
 
     // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
     def originalV = version();
@@ -21,7 +22,7 @@ node {
 
 def version() {
     def matcher = readFile('pom.xml') =~ '<version>(.+)-.*</version>'
-    matcher ? matcher[0][1][2].tokenize(".") : null
+    matcher ? matcher[0][1].tokenize(".") : null
 }
 
 /*stage name: 'test', concurrency: 3
