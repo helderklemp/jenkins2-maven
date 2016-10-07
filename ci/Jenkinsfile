@@ -1,9 +1,9 @@
 stage name: 'build', concurrency: 1
 
 node {
-    mvn "versions:set -DnewVersion=3.22.01 "
-    mvn "versions:commit"
-
+    //mvn "versions:set -DnewVersion=3.22.01 "
+    //mvn "versions:commit"
+    echo "MAven version " getProjectVersion()
     // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
     def originalV = version();
     def major = originalV[0];
@@ -19,7 +19,11 @@ node {
     }
 }
 
-
+def getProjectVersion() {
+    def file = readFile('pom.xml')
+    def project = new XmlSlurper().parseText(file)
+    return project.version.text()
+}
 def version() {
     def matcher = readFile('pom.xml') =~ '<version>(.+)-.*</version>'
     matcher ? matcher[0][1].tokenize(".") : null
