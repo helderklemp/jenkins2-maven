@@ -9,6 +9,8 @@ node {
     //def minor = originalV[1];
     //def patch = originalV[2];
     echo "initial version ${originalV}"
+    def vasions = originalV.split(".")
+    echo "major ${vasions[0]}"
     //echo "major " + major
     //echo "minor ${minor}"
     //echo "build ${patch}"
