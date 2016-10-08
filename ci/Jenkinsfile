@@ -10,8 +10,8 @@ node {
     //def patch = originalV[2];
     echo "initial version ${originalV}"
     def semver = originalV =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+(?<build>[\da-z\-]+(?:\.[\da-z\-]+)*))?\b/
-    if (semver.matches()) {
-        echo "Version ${originalV} is semver compatible"
+    if (semver) {
+        echo "Version ${semver} is semver compatible"
     }
     //def versions = originalV.split(".")
     //echo "major ${versions}"
