@@ -1,23 +1,25 @@
 stage name: 'build', concurrency: 1
-
 node {
     mvn "clean package "
+    stash name: 'sources', includes: 'pom.xml,src/'
     //mvn "versions:commit"
     // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
-    sh "ls -l"
-    def originalV = version();
-    def major = originalV[0];
-    def minor = originalV[1];
-    def patch = originalV[2];
-    echo "initial version ${originalV}"
-    echo "major ${major}"
-    echo "minor ${minor}"
-    echo "build ${patch}"
-    def v = "${major}.${minor}-${env.BUILD_NUMBER}"
-    if (v) {
-        echo "Building version ${v}"
-    }
 }
+unstash 'sources'
+sh "ls -l"
+def originalV = version();
+def major = originalV[0];
+def minor = originalV[1];
+def patch = originalV[2];
+echo "initial version ${originalV}"
+echo "major ${major}"
+echo "minor ${minor}"
+echo "build ${patch}"
+def v = "${major}.${minor}-${env.BUILD_NUMBER}"
+if (v) {
+    echo "Building version ${v}"
+}
+
 
 def getProjectVersion() {
     def file = readFile('pom.xml')
