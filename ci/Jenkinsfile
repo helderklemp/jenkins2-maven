@@ -1,7 +1,7 @@
 stage name: 'build', concurrency: 1
 
 node {
-    //mvn "versions:set -DnewVersion=3.22.01 "
+    mvn "clean package "
     //mvn "versions:commit"
     // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
     def originalV = version();
