@@ -1,6 +1,6 @@
 stage name: 'build', concurrency: 1
 node {
-    mvn "clean package "
+    //mvn "clean package "
     //mvn "versions:commit"
     // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
     sh "ls -l"
@@ -9,7 +9,7 @@ node {
     //def minor = originalV[1];
     //def patch = originalV[2];
     echo "initial version ${originalV}"
-    //echo "major ${major}"
+    echo "major ${originalV[0]}"
     //echo "minor ${minor}"
     //echo "build ${patch}"
     //def v = "${major}.${minor}-${env.BUILD_NUMBER}"
