@@ -28,7 +28,7 @@ def getProjectVersion() {
 }
 def version() {
     def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-    matcher ? matcher[0][1][2] : null
+    matcher ? matcher[0][1] : null
 }
 
 /*stage name: 'test', concurrency: 3
