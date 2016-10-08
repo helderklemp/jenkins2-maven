@@ -9,8 +9,12 @@ node {
     //def minor = originalV[1];
     //def patch = originalV[2];
     echo "initial version ${originalV}"
-    def versions = originalV.split(".")
-    echo "major ${versions}"
+    def semver = originalV =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+(?<build>[\da-z\-]+(?:\.[\da-z\-]+)*))?\b/
+    if (semver.matches()) {
+        echo "Version ${originalV} is semver compatible"
+    }
+    //def versions = originalV.split(".")
+    //echo "major ${versions}"
     //echo "major " + major
     //echo "minor ${minor}"
     //echo "build ${patch}"
