@@ -6,13 +6,13 @@ node {
     sh "ls -l"
     def originalV = version();
     def major = originalV[0];
-    //def minor = originalV[1];
+    def minor = originalV[1];
     //def patch = originalV[2];
     echo "initial version ${originalV}"
-    echo "major " + major
+    //echo "major " + major
     //echo "minor ${minor}"
     //echo "build ${patch}"
-    //def v = "${major}.${minor}-${env.BUILD_NUMBER}"
+    def v = "${major}.${minor}-${env.BUILD_NUMBER}"
     if (v) {
         echo "Building version ${v}"
     }
