@@ -12,11 +12,10 @@ def userInput = input(
 ])
 echo("new version: " + userInput['version'])
 node {
-    def version = userInput['version']
-    mvn "clean install"
+    def v = userInput['version']
     unstash 'source'
-    mvn "versions:set -DnewVersion=" + version
-    mvn "commit"
+    //mvn "versions:set -DnewVersion=" + version
+    //mvn "commit"
 }
 
 /*stage name: 'test', concurrency: 3
