@@ -15,7 +15,7 @@ node {
     def version = userInput['version']
     mvn "clean install"
     unstash 'source'
-    mvn "versions:set -DnewVersion=" + $ { version }
+    mvn "versions:set -DnewVersion=" + version
     mvn "commit"
 }
 
