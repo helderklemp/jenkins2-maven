@@ -17,6 +17,7 @@ node {
     mvn "versions:set -DnewVersion=${userInput}"
     mvn "versions:commit"
     mvn "clean install"
+    sh "git remote set-url origin git@github.com/helderlkemp/jenkins2-maven"
     sh "git push --set-upstream origin  ${release}"
 }
 
