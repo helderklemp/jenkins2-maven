@@ -1,28 +1,16 @@
 stage name: 'build', concurrency: 1
 node {
-    //mvn "clean package "
-    //mvn "versions:commit"
-    // Prepare the version by extracting major and minor number and creating a new number: [major].[minor]-[BUILDNUMBER]
-    sh "ls -l"
-    def originalV = version();
-    //def major = originalV[0];
-    //def minor = originalV[1];
-    //def patch = originalV[2];
-    echo "initial version ${originalV}"
-    def semver = originalV =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+(?<build>[\da-z\-]+(?:\.[\da-z\-]+)*))?\b/
-    if (semver) {
-        echo "Version ${semver} is semver compatible"
-    }
-    //def versions = originalV.split(".")
-    //echo "major ${versions}"
-    //echo "major " + major
-    //echo "minor ${minor}"
-    //echo "build ${patch}"
-    //def v = "${major}.${minor}-${env.BUILD_NUMBER}"
-    //if (v) {
-    //    echo "Building version ${v}"
-    //}
+    mvn "clean install "
 }
+
+stage 'promotion'
+def userInput = input(
+        id: 'userInput', message: 'Let\'s promote?', parameters: [
+        [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env'],
+        [$class: 'TextParameterDefinition', defaultValue: 'uat1', description: 'Target', name: 'target']
+])
+echo("Env: " + userInput['env'])
+echo("Target: " + userInput['target'])
 
 
 def getProjectVersion() {
