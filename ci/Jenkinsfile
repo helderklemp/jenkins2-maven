@@ -12,7 +12,6 @@ def userInput = input(
 ])
 echo("new version: " + userInput['version'])
 node {
-    def v = userInput['version']
     unstash 'source'
     //mvn "versions:set -DnewVersion=" + version
     //mvn "commit"
