@@ -1,20 +1,27 @@
 stage name: 'build', concurrency: 1
 node {
-    mvn "clean install"
-    stash excludes: 'target/', name: 'source'
+    mvn "clean install "
 }
 
 stage 'promotion'
 def userInput = input(
         id: 'userInput', message: 'Let\'s promote?', parameters: [
-        [$class: 'TextParameterDefinition', description: 'Target Version', name: 'version']
-
+        [$class: 'TextParameterDefinition', description: 'Target Version', name: 'env'],
+        [$class: 'TextParameterDefinition', defaultValue: 'uat1', description: 'Target', name: 'target']
 ])
-echo("new version: " + userInput['version'])
-node {
-    unstash 'source'
-    //mvn "versions:set -DnewVersion=" + version
-    //mvn "commit"
+echo("Env: " + userInput['env'])
+echo("Target: " + userInput['target'])
+
+
+def getProjectVersion() {
+    def file = readFile('pom.xml')
+    def project = new XmlSlurper().parseText(file)
+    return project.version.text()
+}
+
+def version() {
+    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+    matcher ? matcher[0][1] : null
 }
 
 /*stage name: 'test', concurrency: 3
