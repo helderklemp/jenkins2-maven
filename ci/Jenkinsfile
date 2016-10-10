@@ -6,22 +6,13 @@ node {
 stage 'promotion'
 def userInput = input(
         id: 'userInput', message: 'Let\'s promote?', parameters: [
-        [$class: 'TextParameterDefinition', description: 'Target Version', name: 'version'],
-        [$class: 'TextParameterDefinition', defaultValue: 'dev2', description: 'Target', name: 'target']
+        [$class: 'TextParameterDefinition', defaultValue: 'uat', description: 'Environment', name: 'env']
 ])
-echo("Env: " + userInput['version'])
-echo("Target: " + userInput['target'])
-
-
-def getProjectVersion() {
-    def file = readFile('pom.xml')
-    def project = new XmlSlurper().parseText(file)
-    return project.version.text()
-}
-
-def version() {
-    def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
-    matcher ? matcher[0][1] : null
+echo("Version: " + userInput)
+node {
+    mvn "versions:set -DnewVersion=${userInput}"
+    mvn "versions:commit"
+    mvn "clean install"
 }
 
 /*stage name: 'test', concurrency: 3
