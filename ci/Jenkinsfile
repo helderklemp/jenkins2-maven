@@ -10,9 +10,14 @@ def userInput = input(
 ])
 echo("Version: " + userInput)
 node {
+    def release = "release/${userInput}"
+    sh "git branch ${release}"
+    sh "git checkout ${release}"
+
     mvn "versions:set -DnewVersion=${userInput}"
     mvn "versions:commit"
     mvn "clean install"
+    sh "git push --set-upstream origin  ${release}"
 }
 
 /*stage name: 'test', concurrency: 3
